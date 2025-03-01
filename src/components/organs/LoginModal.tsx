@@ -4,17 +4,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 
 import Logo from "../../assets/logo1.png";
-import { Link, useNavigate } from "react-router-dom";
-
-interface User {
-  avatar: string;
-  email: string;
-}
+import { useNavigate } from "react-router-dom";
 
 interface LoginModalProps {
   isLogin: boolean;
   onClose: () => void;
-  handleLoginSuccess: any;
+  handleLoginSuccess?: any;
 }
 
 const LoginModal: FC<LoginModalProps> = ({
@@ -36,8 +31,6 @@ const LoginModal: FC<LoginModalProps> = ({
     setError("");
 
     try {
-      console.log(handleLoginSuccess);
-
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,

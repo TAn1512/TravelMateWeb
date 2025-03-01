@@ -4,7 +4,7 @@ import { Button } from "../atoms/Button";
 import Logo from "../../assets/logo1.png";
 import { NavButtons, NavLinks } from "../particles/DataLists";
 import { List } from "../atoms/List";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 // import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { Slide } from "react-awesome-reveal";
 import LoginModal from "../organs/LoginModal";
@@ -17,7 +17,6 @@ import DownloadModal from "../organs/DownloadModal";
 
 const NavBar = () => {
   // const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const [navBarColor, setNavBarColor] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
@@ -41,10 +40,6 @@ const NavBar = () => {
         element.scrollIntoView({ behavior: "smooth" });
       }
     }
-  };
-
-  const handleToggle = () => {
-    setOpen(!open);
   };
 
   const listenScrollEvent = () => {
