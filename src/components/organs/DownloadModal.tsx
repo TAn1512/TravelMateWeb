@@ -9,9 +9,6 @@ interface DownloadModalProps {
 }
 
 const DownloadModal: FC<DownloadModalProps> = ({ onClose }) => {
-  const appDownloadLink =
-    "https://www.facebook.com/profile.php?id=100075936157371"; // Link tải app
-
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white flex items-center flex-col p-8 rounded-2xl shadow-lg max-w-sm text-center relative">
