@@ -93,7 +93,7 @@ const Footer = () => {
             <List>
               <Link
                 to={`https://www.facebook.com/profile.php?id=100075936157371`}
-                className="text-color3 border-[1px] border-color3/50 p-2.5 flex rounded-full transition-all duration-300 ease-in hover:bg-gradient-to-tr from-color1 to-color2 hover:text-white"
+                className="text-color3 border-[1px] border-color3/50 p-2.5 flex rounded-full transition-all duration-300 ease-in hover:bg-gradient-to-tr from-blue-500 to-blue-400 hover:text-white"
               >
                 <FacebookLogo size={15} color="currentColor" weight="fill" />
               </Link>

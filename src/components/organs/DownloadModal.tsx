@@ -1,5 +1,8 @@
 import { FC } from "react";
 import QRCode from "../../assets/QR.jpg";
+import { List } from "../atoms/List";
+import { Link } from "react-router-dom";
+import { FacebookLogo, InstagramLogo } from "@phosphor-icons/react";
 
 interface DownloadModalProps {
   onClose: () => void;
@@ -28,14 +31,24 @@ const DownloadModal: FC<DownloadModalProps> = ({ onClose }) => {
           <img src={QRCode} alt="QR Code" className="w-full h-full" />
         </div>
         <p className="text-gray-600 mt-4">Nếu gặp vấn đề hãy liên hệ:</p>
-        <a
-          href={appDownloadLink}
-          className="text-blue-500 font-medium hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {appDownloadLink}
-        </a>
+        <ul className="w-full flex items-center lg:justify-center gap-4 mt-2">
+          <List>
+            <Link
+              to={`https://www.facebook.com/profile.php?id=100075936157371`}
+              className="text-color3 border-[1px] border-color3/50 p-2.5 flex rounded-full transition-all duration-300 ease-in hover:bg-gradient-to-tr from-blue-500 to-blue-400 hover:text-white"
+            >
+              <FacebookLogo size={15} color="currentColor" weight="fill" />
+            </Link>
+          </List>
+          <List>
+            <Link
+              to={`https://www.instagram.com/travelmatebusinessvn/`}
+              className="text-color3 border-[1px] border-color3/50 p-2.5 flex rounded-full transition-all duration-300 ease-in hover:bg-gradient-to-tr from-color1 to-color2 hover:text-white"
+            >
+              <InstagramLogo size={15} color="currentColor" weight="fill" />
+            </Link>
+          </List>
+        </ul>
       </div>
     </div>
   );

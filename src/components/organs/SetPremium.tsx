@@ -26,17 +26,28 @@ const SetPremium: React.FC = () => {
       // Truy vấn Firestore để tìm paymentCode trong premiumOrder
       const q = query(
         collection(db, "premiumOrder"),
-        where("paymentCode", "==", code)
+        where("paymentCode", "==", code),
+        where("status", "==", "pending") // Đảm bảo chỉ lấy các đơn chưa xử lý
       );
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
         const docSnap = querySnapshot.docs[0];
-        const { userId, selectedPlan } = docSnap.data();
+        const { userId, selectedPlan, timestamp } = docSnap.data();
 
-        // Cập nhật isPremium thành true cho userId đó
+        // Tính ngày hết hạn
+        const expirationDate = new Date(timestamp);
+        if (selectedPlan === "month") {
+          expirationDate.setMonth(expirationDate.getMonth() + 1);
+        } else if (selectedPlan === "year") {
+          expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+        }
+
+        // Cập nhật ngày hết hạn cho userId đó
         const userRef = doc(db, "users", userId);
-        await updateDoc(userRef, { isPremium: true });
+        await updateDoc(userRef, {
+          premiumExpirationDate: expirationDate.toISOString(),
+        });
 
         // Ghi dữ liệu vào PremiumStatistic
         await addDoc(collection(db, "PremiumStatistic"), {
@@ -45,11 +56,15 @@ const SetPremium: React.FC = () => {
           selectedPlan, // Gói premium (tháng/năm)
           paymentCode: code, // Mã thanh toán
           status: "confirmed", // Trạng thái xác nhận
+          premiumExpirationDate: expirationDate.toISOString(),
         });
+
+        // Cập nhật trạng thái đơn hàng
+        await updateDoc(docSnap.ref, { status: "confirmed" });
 
         alert("Tài khoản đã được nâng cấp lên Premium!");
       } else {
-        alert("Mã không hợp lệ!");
+        alert("Mã không hợp lệ hoặc đã được sử dụng!");
       }
     } catch (error) {
       console.error("Lỗi khi xác nhận mã:", error);
